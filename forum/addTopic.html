@@ -1,0 +1,39 @@
+<html>
+
+<head>
+	<title>Add New Topic</title>
+	<script src="querymy.js"></script>
+	<style></style>
+</head>
+<body>
+<form name="topicForm">
+Topic Name:<br>
+<textarea type="text" name="topic" id="topic"></textarea><br><br>
+<input type="submit" onclick="addQuestion();" value="Add Topic"/>
+</form>
+<script tyep="text/javascript">
+	function addQuestion(){
+	var topic=document.getElementById("topic").value;
+   var dataString='topic1='+topic;
+	if(topic==''){
+ 	alert("Topic box can not be empty");
+ }else {
+	// AJAX code to submit form.
+$.ajax({
+type: "POST",
+url:"addTopicHelper.php",
+data: dataString,
+cache: false,
+success: function(html) {
+alert("New Topic has been added!!!!");
+}
+});
+document.form.reset();
+}
+return false;
+ }
+</script>
+
+
+</body>
+</html>

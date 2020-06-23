@@ -1,0 +1,179 @@
+<?php
+session_start();
+session_destroy();
+?>
+<html>
+    <head>
+	<title>
+		Forum Login
+	</title>
+	<script src="querymy.js"></script>
+	<style>
+	.templete{width:1060px; background:white; color:black; margin:0 auto;}
+    .clear{overflow:hidden;}
+	.firstPart{background-color: blue;
+		color:white;
+		font-size:30px;
+		text-align:center;
+		border-bottom:6px solid #9d16be;
+		border-left:2px solid black;
+		border-right:2px solid black;
+		}
+	.secondPart{
+        background-image: url("loginPage.png");
+        background-repeat: no-repeat;
+          background-size: cover;
+        border-bottom:6px solid #9d16be;
+        border-left:2px solid #9d16be;
+        border-right:2px solid #9d16be;
+    }
+	.lastPart{
+	    height:100px;
+	    background:black;
+	    border-left:2px solid black;
+		border-right:2px solid black;
+	    color:gold;
+	    font-size:20px;
+	}
+	.formDesign{
+		background-color:purple;
+		border:solid black 3px;
+		padding:20px;
+		text-align:left;
+		font-size:25px;
+		width:800px;
+	}
+
+	.formDesign input{
+		margin:10px;
+		opacity:0.9;
+	}
+	.subHead{
+		background-color:#9d16be;
+		color:white;
+		font-size:30px;
+		padding:10px;
+		border:solid #911dad 4px;
+	}	
+	.addProductButton{
+		background-color:#1B8B28;
+		color:white;
+		font-size:25px;
+		width: 185px;
+		height:90px;
+		position:relative;
+		left:72.5%;
+		bottom:230px;
+	
+	}
+	.addProductButton1{
+		background-color:#1B8B28;
+		color:white;
+		font-size:25px;
+		width: 185px;
+		height:90px;
+		position:relative;
+		left:46%;
+		bottom:130px;
+	}
+	.loginButton{
+		height:20px;
+		width:200px;
+		background-color:blue;
+		color:white;
+	}
+	.middleLoginPart{
+        margin-top:-90px;
+        margin-bottom:-90px;
+		border:2px solid white;
+        height: 550px;
+        position:relative;
+        left:31%;
+		
+		width:400px;
+		background-color:white;
+	}
+    .box{
+            font-size:18pt;
+            height:45px;
+            width:350px;
+            border:0px solid white;
+            border-bottom: 2px solid black;
+           padding-left: 15px;
+        }
+
+	</style>
+	</head>
+	<body>
+
+
+<div class="firstPart templete clear">
+		<h1 class="header">OSA Consulting Tech</h1>
+</div>
+		<center>
+
+
+<div class="secondPart templete clear">
+	<br><br><br><br><br>
+	<div class="middleLoginPart">
+		<br><br><br>
+<b class="subHead"> Forum Login</b><br><br>
+
+	<table>
+	<tr><td><b style="font-size:18pt;"></b><input type="text" name="username" id="username" class="box" placeholder="Email" ></td></tr>
+	<tr><td><b style="font-size:18pt;"></b><br><input type="password" name="password" id="password" class="box" placeholder="Password"></td><br><br></tr>
+	<tr><td><br><br>
+			<select id="position" style="font-size:18pt;height:40px;width:200px;">
+  				<option value="user">Student</option>
+  				<option value="admin">Admin</option>
+			</select>
+		&nbsp;&nbsp;<button class="loginButton" type="button" id="login_button"style="font-size:18pt;height:40px;width:100px;">Login</button>
+	<tr><td> <span id="login_message"></span></td></tr>
+	</table>
+
+	<script type="text/javascript">
+		$(function(){
+			$("#login_button").click(function(){
+				$("#login_button").hide();
+				$("#position").hide();
+				$("#login_message").html("<img src='loader.gif'>");
+				var username=$("#username").val();
+				var password=$("#password").val();
+				var position=$("#position").val();
+				$.post("login.php", {username: username, password: password, position: position}).done(function(data){
+						if(data == "success"){
+						    if(position=="admin"){
+			
+						        window.location.assign('adminPage.php');
+						         
+						        	session_start();
+  	                            	$_SESSION['user'] = '1';
+  	                            	$_SESSION['timestamp']=time();
+  	                            	
+						    }else{
+						        window.location.assign('studentLogin.php');
+						      	 session_start();
+  	                             $_SESSION['user'] = '1';
+						    }
+					}else{
+						$("#login_message").text("Invalid username or password! Please try again.");
+						$("#login_button").show();
+						$("#position").show();
+					}
+				});
+			});
+		});
+	</script>
+<br><br><br>
+ </div>
+<br> <br><br> <br><br> 
+
+
+</div>
+<div class="lastPart templete clear">
+    <b></b>OSA Consulting Tech<br></b>
+    New York, USA
+</div>
+
+</body>
+</html>
